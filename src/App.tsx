@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import IndiceGeneros from './generos/IndiceGeneros';
-import LandingPage from './LandingPage';
+import rutas from './route-config';
 import Menu from './utils/Menu';
+import configurarValidaciones from './validaciones'
+
+configurarValidaciones();
 
 function App() {
   return (
@@ -14,16 +16,10 @@ function App() {
         <div className="container">
 
           <Switch>
-            <Route exact path='/'>
-
-              <LandingPage />
-            
-            </Route>
-
-            <Route path="/generos">
-              <IndiceGeneros />
-            </Route>
-
+            {rutas.map(ruta => <Route key={ruta.path} 
+              path={ruta.path} exact={ruta.exact}>
+                <ruta.componente />
+            </Route>)}
           </Switch> 
         </div>
         
