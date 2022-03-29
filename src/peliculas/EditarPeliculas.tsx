@@ -1,3 +1,4 @@
+import { actorPeliculaDTO } from "../actores/actores.model";
 import { cineDTO } from "../cines/cines.model";
 import { generoDTO } from "../generos/generos.model";
 import FormularioPeliculas from "./FormularioPeliculas";
@@ -20,10 +21,18 @@ export default function EditarPeliculas(){
         {id:1, nombre: 'Agora'}
     ]
 
+    const actoresSeleccionados: actorPeliculaDTO[]=[
+        {
+            id:2, nombre: 'Fernando',personaje: '',
+            foto: 'https://m.media-amazon.com/images/M/MV5BMTQ1NTQwMTYxNl5BMl5BanBnXkFtZTYwMjA1MzY1._V1_UX214_CR0,0,214,317_AL_.jpg'
+        }
+    ]
+
     return(
         <>
             <h3>Editar Película</h3>
             <FormularioPeliculas 
+                actoresSeleccionados={actoresSeleccionados}
                 cinesSeleccionados={cinesSeleccionados}
                 cinesNoSeleccionados={cinesNoSeleccionados}
                 generosNoSeleccionados={generosNoSeleccionados}

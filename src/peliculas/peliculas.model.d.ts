@@ -13,6 +13,7 @@ export interface peliculaCreacionDTO{
     posterURL?: string;
     generosIds?: number[];
     cinesIds?: number[];
+    actores?: actorPeliculaDTO[];
 }
 
 export interface landigPageDTO{
