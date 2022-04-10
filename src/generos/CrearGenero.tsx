@@ -1,11 +1,14 @@
 import axios from "axios";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { urlGeneros } from "../utils/endpoints";
+import MostrarErrores from "../utils/MostrarErrores";
 import FormularioGeneros from "./FormularioGeneros";
 import { generoCreacionDTO } from "./generos.model";
 
 export default function CrearGenero(){
     const history= useHistory();
+    const [errores, setErrores] = useState<string[]>([]);
 
     async function crear(genero: generoCreacionDTO){
         try{
@@ -13,14 +16,14 @@ export default function CrearGenero(){
             history.push('/generos');
         }
         catch(error){
-            console.log(error);
+            setErrores(error.response.data);//Accedemos al cuerpo de la respuesta
         }
     }
 
     return(
         <>
             <h3>Crear Género</h3>
-
+            <MostrarErrores errores={errores} />
             <FormularioGeneros modelo={{nombre:''}} 
                 onSubmit={async valores=> {
                     await crear(valores);
