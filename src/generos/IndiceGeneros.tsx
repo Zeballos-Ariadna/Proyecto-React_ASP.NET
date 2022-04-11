@@ -6,6 +6,7 @@ import { urlGeneros } from "../utils/endpoints";
 import ListadoGenerico from "../utils/ListadoGenerico";
 import Paginacion from "../utils/Paginacion";
 import { generoDTO } from "./generos.model";
+import confirmar from './../utils/Confirmar';
 
 export default function IndiceGeneros(){
 
@@ -16,6 +17,10 @@ export default function IndiceGeneros(){
 
 
     useEffect(() => {
+        cargarDatos();
+    }, [pagina, recordsPorPagina])//arreglo de dependencias vacío
+    
+    function cargarDatos(){
         axios.get(urlGeneros, {
             params: {pagina, recordsPorPagina}
         })
@@ -26,7 +31,18 @@ export default function IndiceGeneros(){
                 console.log(respuesta.data);
                 setGeneros(respuesta.data);
             })
-    }, [pagina, recordsPorPagina])//arreglo de dependencias vacío
+    }
+
+    async function borrar(id: number){
+        try{
+            await axios.delete(`${urlGeneros}/${id}`)
+            cargarDatos();
+        }
+        catch(error){
+            console.log(error.response.data);
+        }
+    }
+    
     return(
         <>
             <h3>Indice Géneros</h3>
@@ -40,7 +56,7 @@ export default function IndiceGeneros(){
                     onChange={e => {
                     setPagina(1);
                     setRecordsPorPagina(parseInt(e.currentTarget.value,10))
-                    }}>
+                    }}> 
                     <option value={5}>5</option>
                     <option value={10}>10</option>
                     <option value={25}>25</option>
@@ -63,10 +79,12 @@ export default function IndiceGeneros(){
                         {generos?.map(genero => 
                         <tr key = {genero.id}>
                             <td>
-                                <Link className="btn btn-success" to={`/generos/${genero.id}`}>
+                                <Link className="btn btn-success" to={`/generos/editar/${genero.id}`}>
                                     Editar
                                 </Link>
-                                <Button className= "btn btn-danger">Borrar</Button>
+                                <Button onClick={() => confirmar(() => borrar(genero.id)) }
+                                className= "btn btn-danger"
+                                >Borrar</Button>
 
                             </td>
                             <td>

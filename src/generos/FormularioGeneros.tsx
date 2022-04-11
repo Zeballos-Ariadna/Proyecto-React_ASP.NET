@@ -22,7 +22,7 @@ export default function FormularioGeneros(props: formularioGenerosProps){
                     <FormGroupText campo="nombre" label="Nombre" placeholder="Nombre género" />
 
                     <Button disabled={formikProps.isSubmitting} 
-                        type="submit">Salvar</Button>
+                        type="submit" >Salvar</Button>
                     <Link className="btn btn-secondary" to="/generos">Cancelar</Link>
                 </Form>
             
