@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { urlActores } from "../utils/endpoints";
+import { convertirActorAFormData } from "../utils/FormDataUtils";
 import MostrarErrores from "../utils/MostrarErrores";
 import { actorCreacionDTO } from "./actores.model";
 import FormularioActores from "./FormularioActores";
@@ -12,7 +13,13 @@ export default function CrearActores(){
 
     async function crear(actor: actorCreacionDTO){
         try{
-            await axios.post(urlActores, actor);
+            const formData = convertirActorAFormData(actor);
+            await axios({
+                method: 'post',
+                url: urlActores,
+                data: formData,
+                headers: {'Content-Type': 'multipart/form-data'}
+            });
             history.push('/actores');
         }
         catch(error){
