@@ -16,7 +16,7 @@ import { actorPeliculaDTO } from "../actores/actores.model";
 import FormGroupMarkdown from "../utils/FormGroupMarkdown";
 
 export default function FormularioPeliculas(props: formularioPeliculasProps){
-    
+    console.log("POP: ", props)
     const [generosSeleccionados, setGenerosSeleccionados] = useState(mapear(props.generosSeleccionados));
     const [generosNoSeleccionados, setGenerosNoSeleccionados] = useState(mapear(props.generosNoSeleccionados));
 
@@ -77,31 +77,31 @@ export default function FormularioPeliculas(props: formularioPeliculasProps){
                     </div>
 
                     <div className="form-group">
-                        <TypeAheadActores 
-                            onAdd={actores => {
-                                setActoresSeleccionados(actores);
-                            }}
-
-                            onRemove={actor => {
-                                const actores= actoresSeleccionados.filter(x => x !== actor);
-                                setActoresSeleccionados(actores);
-                            }}
+                            <TypeAheadActores 
+                                onAdd={actores => {
+                                    setActoresSeleccionados(actores);
+                                }}
+                                onRemove={actor => {
+                                    const actores = actoresSeleccionados.filter(x => x !== actor);
+                                    setActoresSeleccionados(actores);
+                                }}
                                 actores={actoresSeleccionados}
                                 listadoUI={(actor: actorPeliculaDTO) => 
                                 <>
-                                    {actor.nombre} / <input placeholder="Personaje"
-                                    type="text" value={actor.personaje}
+                                    {actor.nombre} / <input placeholder="Personaje" 
+                                    type="text" value={actor.personaje} 
                                     onChange={e => {
                                         const indice = actoresSeleccionados
                                         .findIndex(x => x.id === actor.id);
 
-                                        const actores=[...actoresSeleccionados];
+                                        const actores = [...actoresSeleccionados];
+                                        
                                         actores[indice].personaje = e.currentTarget.value;
                                         setActoresSeleccionados(actores);
                                     }}
                                     />
                                 </>}
-                        />
+                            />
                     </div>
 
                     <Button disabled={formikProps.isSubmitting} type="submit" >Enviar</Button> 

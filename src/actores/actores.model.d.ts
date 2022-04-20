@@ -18,6 +18,6 @@ export interface actorCreacionDTO{
 export interface actorPeliculaDTO{
     id: number;
     nombre: string;
-    personaje: string;
+    personaje?: string;
     foto: string;
 }
