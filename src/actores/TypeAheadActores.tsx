@@ -48,8 +48,10 @@ export default function TypeAheadActores(props: typeAheadActores){
             <label>Actores</label>
             <AsyncTypeahead 
                 id="typeahead"
-                onChange={actores =>{
-                    if(props.actores.findIndex(x => x.id === actores[0].id) === -1){
+                onChange={actores => {
+                    console.log(actores);
+                    if (props.actores.findIndex(x => x.id === actores[0].id) === -1) {
+                        actores[0].personaje = ""; 
                         props.onAdd([...props.actores, actores[0]]);
                     }
                 }}
