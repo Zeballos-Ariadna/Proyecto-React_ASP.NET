@@ -1,47 +1,69 @@
-import { actorPeliculaDTO } from "../actores/actores.model";
-import { cineDTO } from "../cines/cines.model";
-import { generoDTO } from "../generos/generos.model";
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import Cargando from "../utils/Cargando";
+import { urlPeliculas } from "../utils/endpoints";
+import { convertirPeliculaAFormData } from "../utils/FormDataUtils";
+import MostrarErrores from "../utils/MostrarErrores";
 import FormularioPeliculas from "./FormularioPeliculas";
+import { peliculaCreacionDTO, peliculasPutGetDTO } from "./peliculas.model";
 
 export default function EditarPeliculas(){
-    const generosNoSeleccionados: generoDTO[] = [
-        {id:2, nombre: 'Drama'}
-    ]
+    const [pelicula,setPelicula] = useState<peliculaCreacionDTO>();
+    const [peliculasPutGet, setPeliculasPutGet] = useState<peliculasPutGetDTO>();
 
-    const generosSeleccionados: generoDTO[] = [
-        {id:1, nombre: 'Acción'},
-        {id:3, nombre: 'Comedia'}
-    ]
+    const {id}: any = useParams();
 
-    const cinesSeleccionados: cineDTO[] = [
-        {id:2, nombre: 'Sambil'}
-    ]
+    const history = useHistory();
+    const [errores,setErrores] = useState<string[]>([]);
 
-    const cinesNoSeleccionados: cineDTO[] = [
-        {id:1, nombre: 'Agora'}
-    ]
+    useEffect( () => {
+        axios.get(`${urlPeliculas}/PutGet/${id}`)
+            .then ((respuesta: AxiosResponse<peliculasPutGetDTO>) => {
+                const modelo: peliculaCreacionDTO = {
+                    titulo: respuesta.data.pelicula.titulo,
+                    enCines: respuesta.data.pelicula.enCines,
+                    trailer: respuesta.data.pelicula.trailer,
+                    posterURL: respuesta.data.pelicula.poster,
+                    resumen: respuesta.data.pelicula.resumen,
+                    fechaLanzamiento: new Date(respuesta.data.pelicula.fechaLanzamiento)
+                };
+                setPelicula(modelo);
+                setPeliculasPutGet(respuesta.data);
 
-    const actoresSeleccionados: actorPeliculaDTO[]=[
-        {
-            id:2, nombre: 'Fernando',personaje: '',
-            foto: 'https://m.media-amazon.com/images/M/MV5BMTQ1NTQwMTYxNl5BMl5BanBnXkFtZTYwMjA1MzY1._V1_UX214_CR0,0,214,317_AL_.jpg'
+            })
+    },[id])//para que el FormularioPeliculas no se cargue cada vez que se renderice
+
+    async function editar(peliculaEditar: peliculaCreacionDTO){
+        try{
+            const formData = convertirPeliculaAFormData(peliculaEditar);
+            await axios({
+                method: "put",
+                url: `${urlPeliculas}/${id}`,
+                data: formData,
+                headers: {'Content-Type': 'multipart/form-data'}
+            });
+            history.push(`/pelicula/${id}`)
         }
-    ]
+        catch(error){
+            setErrores(error.response.data);
+        }
+    }
 
     return(
         <>
             <h3>Editar Película</h3>
-            <FormularioPeliculas 
-                actoresSeleccionados={actoresSeleccionados}
-                cinesSeleccionados={cinesSeleccionados}
-                cinesNoSeleccionados={cinesNoSeleccionados}
-                generosNoSeleccionados={generosNoSeleccionados}
-                generosSeleccionados={generosSeleccionados}
-                modelo={{titulo:'SpiderMan', enCines: true, trailer:'url',
-                    fechaLanzamiento: new Date('2019-01-01T00:00:00')
-                }}
-                onSubmit={valores => console.log(valores)}
-            />
+            <MostrarErrores errores={errores} />
+            {pelicula && peliculasPutGet ? <FormularioPeliculas 
+                actoresSeleccionados={peliculasPutGet.actores}
+                cinesSeleccionados={peliculasPutGet.cinesSeleccionados}
+                cinesNoSeleccionados={peliculasPutGet.cinesNoSeleccionados}
+                generosNoSeleccionados={peliculasPutGet.generosNoSeleccionados}
+                generosSeleccionados={peliculasPutGet.generosSeleccionados}
+                modelo={pelicula}
+                onSubmit={async valores => await editar(valores)}
+            />: <Cargando />}
+            
         </>
         
     )
