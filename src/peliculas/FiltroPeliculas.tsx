@@ -17,13 +17,13 @@ export default function FiltroPeliculas(){
         proximosEstrenos: false, 
         enCines: false,
         pagina: 1,
-        recordsPorPagina: 10
+        recordsPorPagina: 1
     }
     const [generos, setGeneros]= useState<generoDTO[]>([]);
     const [peliculas,setPeliculas]= useState<peliculaDTO[]>([]);
     const history= useHistory();
     const query= new URLSearchParams(useLocation().search);
-    const [totalDePaginas,setTotalDePaginas] = useState(10);
+    const [totalDePaginas,setTotalDePaginas] = useState(0);
 
     useEffect(() =>{//Listado de generos que necesitamos en Select
         axios.get(`${urlGeneros}/todos`)
@@ -160,7 +160,7 @@ export default function FiltroPeliculas(){
                             </div>
                         </Form>
 
-                        <ListadoPeliculas peliculas={peliculas}/>
+                        <ListadoPeliculas peliculas={peliculas} />
                         <Paginacion cantidadTotalDePaginas={totalDePaginas}
                         paginaActual={formikProps.values.pagina} 
                         onChange={nuevaPagina => {
