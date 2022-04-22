@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Autorizado from "../auth/Autorizado";
 
 export default function Menu(){
     const claseActiva="active";
@@ -8,35 +9,44 @@ export default function Menu(){
                 <NavLink className="navbar-brand" activeClassName={claseActiva} to="/">React películas</NavLink>
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <NavLink className="nav-link" activeClassName={claseActiva} to="/generos">
-                                Géneros
-                            </NavLink>
-                        </li>
-
+                        
                         <li className="nav-item">
                             <NavLink className="nav-link" activeClassName={claseActiva} to="/peliculas/filtrar">
                                 Filtrar Películas
                             </NavLink>
                         </li>
 
-                        <li className="nav-item">
-                            <NavLink className="nav-link" activeClassName={claseActiva} to="/actores">
-                                Actores
-                            </NavLink>
-                        </li>
+                        <Autorizado role="admin"
+                            autorizado={
+                                <>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" activeClassName={claseActiva} to="/generos">
+                                            Géneros
+                                        </NavLink>
+                                    </li>
 
-                        <li className="nav-item">
-                            <NavLink className="nav-link" activeClassName={claseActiva} to="/cines">
-                                Cines
-                            </NavLink>
-                        </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" activeClassName={claseActiva} to="/actores">
+                                            Actores
+                                        </NavLink>
+                                    </li>
 
-                        <li className="nav-item">
-                            <NavLink className="nav-link" activeClassName={claseActiva} to="/peliculas/crear">
-                                Crear Películas
-                            </NavLink>
-                        </li>
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" activeClassName={claseActiva} to="/cines">
+                                            Cines
+                                        </NavLink>
+                                    </li>
+
+                                    <li className="nav-item">
+                                        <NavLink className="nav-link" activeClassName={claseActiva} to="/peliculas/crear">
+                                            Crear Películas
+                                        </NavLink>
+                                    </li>
+                                </>
+                            } 
+                        />
+
+                        
                     </ul>
                 </div>
             </div>

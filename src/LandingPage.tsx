@@ -27,6 +27,7 @@ export default function LandingPage(){
           <Autorizado 
             autorizado={<>Estás autorizado</>}
             noAutorizado={<>No estás autorizado</>}
+            role="admin"
           />
 
           <AlertaContext.Provider value={() => cargarDatos()}>
