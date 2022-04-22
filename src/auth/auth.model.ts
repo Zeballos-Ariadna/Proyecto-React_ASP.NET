@@ -2,3 +2,13 @@ export interface claim{
     nombre: string;
     valor: string;
 }
+
+export interface credencialesUsuarios{
+    email: string;
+    password: string;
+}
+
+export interface respuestaAutenticacion{
+    token: string;
+    expiracion: Date;
+}
