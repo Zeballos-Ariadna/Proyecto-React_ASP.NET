@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Autorizado from "../auth/Autorizado";
 
 export default function Menu(){
@@ -6,8 +6,12 @@ export default function Menu(){
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <NavLink className="navbar-brand" activeClassName={claseActiva} to="/">React películas</NavLink>
-                <div className="collapse navbar-collapse">
+                <NavLink className="navbar-brand" activeClassName={claseActiva} 
+                    to="/">React películas
+                </NavLink>
+                <div className="collapse navbar-collapse" 
+                   style={{display: 'flex', justifyContent: 'space-between' }}
+                >
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         
                         <li className="nav-item">
@@ -45,9 +49,23 @@ export default function Menu(){
                                 </>
                             } 
                         />
-
-                        
                     </ul>
+                    
+                        <div className="d-flex">
+                            <Autorizado 
+                                autorizado={<></>}
+                                noAutorizado={<>
+                                    <Link to="/Registro" className="nav-link btn btn-link">
+                                        Registro
+                                    </Link>
+                                    <Link to="/Login" className="nav-link btn btn-link">
+                                        Login
+                                    </Link>
+
+                                </>}
+                            />
+                        </div>
+                    
                 </div>
             </div>
         </nav>

@@ -14,6 +14,7 @@ import FiltroPeliculas from "./peliculas/FiltroPeliculas";
 import RedireccionarALanding from "./utils/RedireccionarALanding";
 import DetallePelicula from "./peliculas/DetallePelicula";
 import Registro from "./auth/Registro";
+import Login from "./auth/Login";
 
 const rutas= [
     {path: '/generos/crear', componente: CrearGenero, esAdmin: true},
@@ -35,6 +36,8 @@ const rutas= [
     {path: '/peliculas', componente: FiltroPeliculas},
 
     {path: '/registro', componente: Registro},
+    {path: '/login', componente: Login},
+
 
     
     {path: '/', componente: LandingPage, exact: true},
