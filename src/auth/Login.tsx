@@ -1,17 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { urlCuentas } from "../utils/endpoints";
 import MostrarErrores from "../utils/MostrarErrores";
+import AutenticacionContext from "./AutenticacionContext";
 import { credencialesUsuarios, respuestaAutenticacion } from "./auth.model";
 import FormularioAuth from "./FormularioAuth";
+import { guardarTokenLocalStorage, obtenerClaims } from "./manejadorJWT";
 
 export default function Login(){
-
+    const {actualizar} = useContext(AutenticacionContext);
     const [errores,setErrores] = useState<string[]>([])
+    const history = useHistory();
+
 
     async function login(credenciales: credencialesUsuarios){
         try{
-            const respuesta= await axios.post<respuestaAutenticacion>(`${urlCuentas}/login`, credenciales); 
+            const respuesta= await 
+            axios.post<respuestaAutenticacion>(`${urlCuentas}/login`, credenciales); 
+            
+            guardarTokenLocalStorage(respuesta.data);
+            actualizar(obtenerClaims());
+            history.push("/");
+
             console.log(respuesta);
         }catch(error){
             setErrores(error.response.data);

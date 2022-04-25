@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import rutas from './route-config';
@@ -6,15 +6,16 @@ import Menu from './utils/Menu';
 import configurarValidaciones from './validaciones'
 import AutenticacionContext from './auth/AutenticacionContext'
 import { claim } from './auth/auth.model';
+import { obtenerClaims } from './auth/manejadorJWT';
 
 configurarValidaciones();
 
 function App() {
-  const [claims,setClaims] = useState<claim[]>([
-    //{nombre: 'email', valor:'felipe@hotmail.com'},
-    //{nombre: 'role', valor:'admin'}
+  const [claims,setClaims] = useState<claim[]>([]);
 
-  ]);
+  useEffect(()=> {
+    setClaims(obtenerClaims());
+  },[])
 
   function actualizar(claims: claim[]){
     setClaims(claims);
