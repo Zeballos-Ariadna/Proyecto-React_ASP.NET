@@ -64,8 +64,9 @@ export default function DetallePelicula(){
                     >{genero.nombre}</Link>)
                 }
                 | {pelicula.fechaLanzamiento.toDateString()} 
+                | Voto promedio: {pelicula.promedioVoto}
                 | Tu voto: <Rating maximoValor={5} 
-                            valorSeleccionado={0} 
+                            valorSeleccionado={pelicula.votoUsuario!} 
                             onChange={onVote}/>
 
                 {/* Muestra Poster */}
