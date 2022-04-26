@@ -2,9 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import ListadoPeliculas from "./peliculas/ListadoPeliculas";
 import { landigPageDTO } from "./peliculas/peliculas.model";
-import { urlPeliculas } from "./utils/endpoints";
 import AlertaContext from "./utils/AlertaContext";
-import Autorizado from "./auth/Autorizado";
+import { urlPeliculas } from "./utils/endpoints";
 
 export default function LandingPage(){
 

@@ -17,7 +17,7 @@ export default function FiltroPeliculas(){
         proximosEstrenos: false, 
         enCines: false,
         pagina: 1,
-        recordsPorPagina: 1
+        recordsPorPagina: 10
     }
     const [generos, setGeneros]= useState<generoDTO[]>([]);
     const [peliculas,setPeliculas]= useState<peliculaDTO[]>([]);
