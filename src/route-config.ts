@@ -15,6 +15,7 @@ import RedireccionarALanding from "./utils/RedireccionarALanding";
 import DetallePelicula from "./peliculas/DetallePelicula";
 import Registro from "./auth/Registro";
 import Login from "./auth/Login";
+import IndiceUsuarios from "./auth/IndiceUsuarios";
 
 const rutas= [
     {path: '/generos/crear', componente: CrearGenero, esAdmin: true},
@@ -37,7 +38,7 @@ const rutas= [
 
     {path: '/registro', componente: Registro},
     {path: '/login', componente: Login},
-
+    {path: '/usuarios', componente: IndiceUsuarios, esAdmin: true},
 
     
     {path: '/', componente: LandingPage, exact: true},
